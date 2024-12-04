@@ -9,6 +9,8 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
+
+	AR "active-response/test"
 )
 
 // Constants for commands and statuses
@@ -176,21 +178,14 @@ func main() {
 			os.Exit(OSInvalid)
 		}
 
-		file, err := os.OpenFile("ar-test-result.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-		if err != nil {
-			writeDebugFile(arName, "Failed to write result file")
-			os.Exit(OSInvalid)
-		}
-		defer file.Close()
-
-		if _, err := file.WriteString(fmt.Sprintf("Active response triggered by rule ID: <%v>\n", keys)); err != nil {
-			writeDebugFile(arName, "Failed to write result file")
+		if err := AR.Add(keys); err != nil {
+			writeDebugFile(arName, "Failed to exec add command")
 			os.Exit(OSInvalid)
 		}
 
 	case DeleteCommand:
-		if err := os.Remove("ar-test-result.txt"); err != nil {
-			writeDebugFile(arName, "Failed to delete result file")
+		if err := AR.Delete(); err != nil {
+			writeDebugFile(arName, "Failed to exec delete command")
 			os.Exit(OSInvalid)
 		}
 
