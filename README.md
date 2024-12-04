@@ -16,3 +16,26 @@ make build IMPORT=quarantine OUTPUT=quarantine_active_response
 ```
 
 You can use `make clean` in order to delete the old `main.go`
+
+## How to add custom scripts ?
+
+If you want to add a custom active response script you have to respect the following structure in your go script:
+```go
+...
+
+func Add() error {
+    return error or nil
+}
+
+func Delete() error {
+    return error or nil
+}
+```
+
+You have to define the `Delete` function even if timeout is not allowed for your active response (just leave it empty)
+
+
+## TODO
+- Modify the makefile in order to allow Linux target compilation
+- Create more active response scripts
+- Improve the structure of custom scripts
