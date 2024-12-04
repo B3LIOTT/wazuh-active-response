@@ -34,7 +34,6 @@ func Delete() error {
 
 You have to define the `Delete` function even if timeout is not allowed for your active response (just leave it empty)
 
-
 ## TODO
 - Modify the makefile in order to allow Linux target compilation
 - Create more active response scripts
