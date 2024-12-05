@@ -4,15 +4,16 @@ package test
 // Author: b3liott
 // Date: 2024-12-04
 // License: MIT
+// Description: TEST ACTIVE RESPONSE
+// 				This active response creates a
+//				files when it's called in order
+// 				to see if it worked well
 // =============================================
 
 import (
 	"fmt"
 	"os"
 )
-
-// TEST ACTIVE RESPONSE
-// This active response creates a files when it's called in order to see if it worked well
 
 func Add(keys []interface{}) error {
 	file, err := os.OpenFile("ar-test-result.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)

@@ -4,6 +4,12 @@ package main
 // Author: b3liott
 // Date: 2024-12-04
 // License: MIT
+// Description: Main code which interacts with
+//				the Wazuh Agent (which calls
+//  			this script when a specific
+//				rule id is triggered) in order
+//				to trigger the desired active
+//				response
 // =============================================
 
 import (
