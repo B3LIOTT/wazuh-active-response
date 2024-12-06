@@ -10,10 +10,6 @@ package quanrantine
 //				services and dumps the memory
 // =============================================
 
-// QUARANTINE ACTIVE RESPONSE
-// This active response puts in quarantine the concerned computer
-// It closes every ports, kills most services and dumps the memory
-
 // TODO
 func Add(keys []interface{}) error {
 
