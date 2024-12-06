@@ -38,3 +38,5 @@ You have to define the `Delete` function even if timeout is not allowed for your
 - Modify the makefile in order to allow Linux target compilation
 - Create more active response scripts
 - Improve the structure of custom scripts
+
+These scripts were based on the python example available [here](https://documentation.wazuh.com/current/user-manual/capabilities/active-response/custom-active-response-scripts.html#python-active-response-script-sample).
