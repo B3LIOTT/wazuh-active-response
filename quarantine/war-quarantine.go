@@ -18,6 +18,5 @@ func Add(keys []interface{}) error {
 
 // TODO
 func Delete() error {
-
 	return nil
 }

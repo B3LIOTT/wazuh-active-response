@@ -70,6 +70,7 @@ func writeDebugFile(arName, msg string) error {
 
 // setupAndCheckMessage parses and validates input from stdin
 func setupAndCheckMessage(arName string) (Message, error) {
+	// Read STDIN
 	reader := bufio.NewReader(os.Stdin)
 	inputStr, err := reader.ReadString('\n')
 	if err != nil {
@@ -79,18 +80,21 @@ func setupAndCheckMessage(arName string) (Message, error) {
 
 	writeDebugFile(arName, inputStr)
 
+	// Get the json Alert message
 	var msg Message
 	if err := json.Unmarshal([]byte(inputStr), &msg.Alert); err != nil {
 		writeDebugFile(arName, "Decoding JSON has failed, invalid input format")
 		return Message{}, fmt.Errorf("invalid input format: %w", err)
 	}
 
+	// Verify if the key "command" exists
 	command, ok := msg.Alert["command"].(string)
 	if !ok {
 		writeDebugFile(arName, "Missing or invalid 'command' field")
 		return Message{}, errors.New("missing or invalid 'command' field")
 	}
 
+	// Get the command
 	switch command {
 	case "add":
 		msg.Command = AddCommand
@@ -106,6 +110,7 @@ func setupAndCheckMessage(arName string) (Message, error) {
 
 // sendKeysAndCheckMessage sends keys and validates the response
 func sendKeysAndCheckMessage(arName string, keys []interface{}) (int, error) {
+	// Build the reponse
 	message := map[string]interface{}{
 		"version": 1,
 		"origin": map[string]string{
@@ -116,6 +121,7 @@ func sendKeysAndCheckMessage(arName string, keys []interface{}) (int, error) {
 		"parameters": map[string]interface{}{"keys": keys},
 	}
 
+	// Convert it to JSON format
 	messageJSON, err := json.Marshal(message)
 	if err != nil {
 		writeDebugFile(arName, "Failed to encode message to JSON")
@@ -125,6 +131,7 @@ func sendKeysAndCheckMessage(arName string, keys []interface{}) (int, error) {
 	writeDebugFile(arName, string(messageJSON))
 	fmt.Println(string(messageJSON))
 
+	// Wait for a response in STDIN
 	reader := bufio.NewReader(os.Stdin)
 	response, err := reader.ReadString('\n')
 	if err != nil {
@@ -134,18 +141,21 @@ func sendKeysAndCheckMessage(arName string, keys []interface{}) (int, error) {
 
 	writeDebugFile(arName, response)
 
+	// Format the response
 	var responseMsg map[string]interface{}
 	if err := json.Unmarshal([]byte(response), &responseMsg); err != nil {
 		writeDebugFile(arName, "Decoding JSON has failed, invalid input format")
 		return OSInvalid, fmt.Errorf("invalid response format: %w", err)
 	}
 
+	// Verify if the key "command" exists
 	action, ok := responseMsg["command"].(string)
 	if !ok {
 		writeDebugFile(arName, "Invalid or missing 'command' field in response")
 		return OSInvalid, errors.New("invalid or missing 'command' field")
 	}
 
+	// Get the command
 	switch action {
 	case "continue":
 		return ContinueCommand, nil
@@ -190,12 +200,14 @@ func main() {
 			os.Exit(OSInvalid)
 		}
 
+		// Call the Add function
 		if err := AR.Add(keys); err != nil {
 			writeDebugFile(arName, "Failed to exec add command")
 			os.Exit(OSInvalid)
 		}
 
 	case DeleteCommand:
+		// Call the Delete function
 		if err := AR.Delete(); err != nil {
 			writeDebugFile(arName, "Failed to exec delete command")
 			os.Exit(OSInvalid)
