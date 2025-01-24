@@ -16,7 +16,10 @@ import (
 //				interfaces and dump the RAM.
 // =============================================
 
-var dumpPath = "C:/path/to/dumpit.exe"
+var (
+	dumperPath = `C:\User\win10\Desktop\winpmem\winpmem_mini_x64_rc2.exe`
+	options    = "mem_dump.raw"
+)
 
 func Add(keys []interface{}) error {
 	if err := blockAllTraffic(); err != nil {
@@ -43,8 +46,9 @@ func blockAllTraffic() error {
 
 // Disable every network interface
 func disableAllNetworkAdapters() error {
-	cmd := exec.Command("Get-NetAdapter", "|", "Disable-NetAdapter", "-Confirm:$false")
-	_, err := cmd.CombinedOutput()
+	command := `Get-NetAdapter | Disable-NetAdapter -Confirm:$false`
+	cmd := exec.Command("powershell", "-NoProfile", "-Command", command)
+	err := cmd.Run()
 	if err != nil {
 		return fmt.Errorf("erreur lors de la désactivation des interfaces réseau: %w", err)
 	}
@@ -54,9 +58,8 @@ func disableAllNetworkAdapters() error {
 // Memory dump
 func generateFullMemoryDump() error {
 	// Commande pour effectuer un dump mémoire
-	// dumpit.exe /a /o memory.raw /q
-	cmd := exec.Command(dumpPath, "/a")
-	_, err := cmd.CombinedOutput()
+	cmd := exec.Command(dumperPath, options)
+	err := cmd.Run()
 	if err != nil {
 		return fmt.Errorf("erreur lors de la génération du dump mémoire: %w", err)
 	}

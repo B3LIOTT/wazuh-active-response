@@ -202,14 +202,14 @@ func main() {
 
 		// Call the Add function
 		if err := AR.Add(keys); err != nil {
-			writeDebugFile(arName, "Failed to exec add command")
+			writeDebugFile(arName, err.Error())
 			os.Exit(OSInvalid)
 		}
 
 	case DeleteCommand:
 		// Call the Delete function
 		if err := AR.Delete(); err != nil {
-			writeDebugFile(arName, "Failed to exec delete command")
+			writeDebugFile(arName, err.Error())
 			os.Exit(OSInvalid)
 		}
 
