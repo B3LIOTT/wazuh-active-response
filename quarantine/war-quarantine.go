@@ -43,7 +43,7 @@ func blockAllTraffic() error {
 
 // Disable every network interface
 func disableAllNetworkAdapters() error {
-	cmd := exec.Command("wmic", "nic", "where", "(NetEnabled=true)", "call", "disable")
+	cmd := exec.Command("Get-NetAdapter", "|", "Disable-NetAdapter", "-Confirm:$false")
 	_, err := cmd.CombinedOutput()
 	if err != nil {
 		return fmt.Errorf("erreur lors de la désactivation des interfaces réseau: %w", err)
