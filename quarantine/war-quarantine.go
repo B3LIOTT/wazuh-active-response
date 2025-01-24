@@ -16,6 +16,8 @@ import (
 //				interfaces and dump the RAM.
 // =============================================
 
+var dumpPath = "C:/path/to/dumpit.exe"
+
 func Add(keys []interface{}) error {
 	if err := blockAllTraffic(); err != nil {
 		return err
@@ -53,7 +55,6 @@ func disableAllNetworkAdapters() error {
 func generateFullMemoryDump() error {
 	// Commande pour effectuer un dump mémoire
 	// dumpit.exe /a /o memory.raw /q
-	dumpPath := "C:/path/to/dumpit.exe"
 	cmd := exec.Command(dumpPath, "/a")
 	_, err := cmd.CombinedOutput()
 	if err != nil {
