@@ -58,8 +58,6 @@ func disableAllNetworkAdapters() error {
 // Memory dump
 func generateFullMemoryDump() error {
 	// Commande pour effectuer un dump mémoire
-	// dumpit.exe /a /o memory.raw /q
-	//cmd := exec.Command(dumpitPath, "/OUTPUT", dumpOutput, "/QUIET")
 	cmd := exec.Command(dumperPath, "/QUIET", "/OUTPUT", dumpOutput)
 	err := cmd.Run()
 	if err != nil {
