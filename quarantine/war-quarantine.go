@@ -17,8 +17,8 @@ import (
 // =============================================
 
 var (
-	dumperPath = `C:\User\win10\Desktop\winpmem\winpmem_mini_x64_rc2.exe`
-	options    = "mem_dump.raw"
+	dumperPath = `C:\Users\win10\Desktop\Comae-Toolkit-v20230117\x64\DumpIt.exe`
+	dumpOutput = `C:\Users\win10\Desktop\mem_dump.dmp`
 )
 
 func Add(keys []interface{}) error {
@@ -58,7 +58,9 @@ func disableAllNetworkAdapters() error {
 // Memory dump
 func generateFullMemoryDump() error {
 	// Commande pour effectuer un dump mémoire
-	cmd := exec.Command(dumperPath, options)
+	// dumpit.exe /a /o memory.raw /q
+	//cmd := exec.Command(dumpitPath, "/OUTPUT", dumpOutput, "/QUIET")
+	cmd := exec.Command(dumperPath, "/QUIET", "/OUTPUT", dumpOutput)
 	err := cmd.Run()
 	if err != nil {
 		return fmt.Errorf("erreur lors de la génération du dump mémoire: %w", err)

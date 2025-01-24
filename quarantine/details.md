@@ -21,9 +21,12 @@ Get-NetAdapter | Enable-NetAdapter -Confirm:$false
 
 ## Memory dump
 
-### Winpmem
-Winpmem is a memory dump tool available for Windows [here](https://github.com/Velocidex/WinPmem/releases/tag/v4.0.rc1) and for Linux [here](http://github.com/Velocidex/Linpmem). However this script is not yet designed to work on Linux.
-
-
 ### Dumpit (not tested)
-Dumpit is another tool for dumping memory, we did not test it with this active response but it is available [here](https://www.magnetforensics.com/resources/magnet-dumpit-for-windows/) for Windows and [here](https://github.com/MagnetForensics/dumpit-linux) for Linux.
+Dumpit is another tool for dumping memory, it is available [here](https://www.magnetforensics.com/resources/magnet-dumpit-for-windows/) for Windows and [here](https://github.com/MagnetForensics/dumpit-linux) for Linux. To execute it in quiet mode you have to use it like this:
+```bash
+DumpIt.exe /QUIET /OUTPUT dump.dmp
+```
+
+### Winpmem
+Winpmem is another option available for Windows [here](https://github.com/Velocidex/WinPmem/releases/tag/v4.0.rc1) and for Linux [here](http://github.com/Velocidex/Linpmem). However this script is not yet designed to work on Linux.
+
